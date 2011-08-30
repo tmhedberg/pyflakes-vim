@@ -134,6 +134,7 @@ if !b:did_python_init
 endif
 
 augroup pyflakes
+
     au BufLeave <buffer> call s:ClearPyflakes()
 
     au BufEnter <buffer> call s:RunPyflakes()
@@ -147,13 +148,14 @@ augroup pyflakes
     au CursorHold <buffer> call s:GetPyflakesMessage()
     au CursorMoved <buffer> call s:GetPyflakesMessage()
 
-    if !exists("*s:PyflakesUpdate")
-        function s:PyflakesUpdate()
-            silent call s:RunPyflakes()
-            call s:GetPyflakesMessage()
-        endfunction
-    endif
 augroup END
+
+if !exists("*s:PyflakesUpdate")
+    function s:PyflakesUpdate()
+        silent call s:RunPyflakes()
+        call s:GetPyflakesMessage()
+    endfunction
+endif
 
 " Call this function in your .vimrc to update PyFlakes
 if !exists(":PyflakesUpdate")
