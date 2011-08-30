@@ -133,25 +133,27 @@ if !b:did_python_init
     finish
 endif
 
-au BufLeave <buffer> call s:ClearPyflakes()
+augroup pyflakes
+    au BufLeave <buffer> call s:ClearPyflakes()
 
-au BufEnter <buffer> call s:RunPyflakes()
-au InsertLeave <buffer> call s:RunPyflakes()
-au InsertEnter <buffer> call s:RunPyflakes()
-au BufWritePost <buffer> call s:RunPyflakes()
+    au BufEnter <buffer> call s:RunPyflakes()
+    au InsertLeave <buffer> call s:RunPyflakes()
+    au InsertEnter <buffer> call s:RunPyflakes()
+    au BufWritePost <buffer> call s:RunPyflakes()
 
-au CursorHold <buffer> call s:RunPyflakes()
-au CursorHoldI <buffer> call s:RunPyflakes()
+    au CursorHold <buffer> call s:RunPyflakes()
+    au CursorHoldI <buffer> call s:RunPyflakes()
 
-au CursorHold <buffer> call s:GetPyflakesMessage()
-au CursorMoved <buffer> call s:GetPyflakesMessage()
+    au CursorHold <buffer> call s:GetPyflakesMessage()
+    au CursorMoved <buffer> call s:GetPyflakesMessage()
 
-if !exists("*s:PyflakesUpdate")
-    function s:PyflakesUpdate()
-        silent call s:RunPyflakes()
-        call s:GetPyflakesMessage()
-    endfunction
-endif
+    if !exists("*s:PyflakesUpdate")
+        function s:PyflakesUpdate()
+            silent call s:RunPyflakes()
+            call s:GetPyflakesMessage()
+        endfunction
+    endif
+augroup END
 
 " Call this function in your .vimrc to update PyFlakes
 if !exists(":PyflakesUpdate")
