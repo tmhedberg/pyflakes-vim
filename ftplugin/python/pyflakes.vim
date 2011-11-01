@@ -222,6 +222,16 @@ endif
 
 if !exists("*s:RunPyflakes")
     function s:RunPyflakes()
+
+        if exists('b:pyflakes_disable')
+            if b:pyflakes_disable
+                return
+            endif
+        endif
+        if bufname('%') == ''
+            return
+        endif
+
         highlight link PyFlakes SpellBad
 
         if exists("b:cleared")
